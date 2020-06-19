@@ -9,11 +9,10 @@ import React from "react";
 // const render = ReactDom.render;
 import { render } from "react-dom";
 
-import HomePage from "./components/HomePage";
-import AboutPage from "./components/AboutPage";
+import App from "./components/App";
 
 // render function accepts 2 arguments
 // the first argument is the component that we want to render -> homepage component
 // the second argument we need to tell react which dom element it should render into.
 
-render(<HomePage />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
