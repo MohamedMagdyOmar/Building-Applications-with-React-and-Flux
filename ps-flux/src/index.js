@@ -10,6 +10,7 @@ import React from "react";
 import { render } from "react-dom";
 
 import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
 
 // render function accepts 2 arguments
 // the first argument is the component that we want to render -> homepage component
