@@ -10,7 +10,7 @@ import React from "react";
 // by default, everything in each file is private
 function HomePage() {
   return (
-    <div ClassName="jumbotron">
+    <div className="jumbotron">
       <h1>Pluralsight Administartion</h1>
       <p>React, Flux, and React Router for ultra-responsive web apps.</p>
     </div>
