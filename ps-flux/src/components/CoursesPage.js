@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // this will call our mock api to get a list of courses
 import { getCourses } from "../api/courseApi";
 
-class CoursesPage extends React.Component {
-  state = {
-    courses: [],
-  };
+function CoursesPage() {
+  // we start with empty courses
+  const [courses, setCourses] = useState([]);
 
+  useEffect(() => {
+    getCourses().then((_courses) => setCourses(_courses));
+  }, []);
+
+  /*
   // we need to show list of courses when this page/component loads.
   // to do that we need to call our first life cycle method
   // the component must be mounted before we call set state
@@ -26,35 +30,33 @@ class CoursesPage extends React.Component {
     // you can use arrow function like this
     // this line says: getCourses from the API. when the call completes, store the array of courses in state
     getCourses().then((courses) => this.setState({ courses: courses }));
-  }
+  }*/
 
-  render() {
-    return (
-      <>
-        <h2>Courses</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>AuthorId</th>
-              <th>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.courses.map((course) => {
-              return (
-                <tr key={course.id}>
-                  <td>{course.title}</td>
-                  <td>{course.authorId}</td>
-                  <td>{course.category}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </>
-    );
-  }
+  return (
+    <>
+      <h2>Courses</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>AuthorId</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courses.map((course) => {
+            return (
+              <tr key={course.id}>
+                <td>{course.title}</td>
+                <td>{course.authorId}</td>
+                <td>{course.category}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
+  );
 }
 
 export default CoursesPage;
