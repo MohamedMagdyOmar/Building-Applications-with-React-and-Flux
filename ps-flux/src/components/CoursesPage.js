@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 // this will call our mock api to get a list of courses
 import { getCourses } from "../api/courseApi";
+import CourseList from "./CourseList";
 
 function CoursesPage() {
   // we start with empty courses
@@ -32,29 +33,14 @@ function CoursesPage() {
     getCourses().then((courses) => this.setState({ courses: courses }));
   }*/
 
+  // note: this component is now too simple. it is focused on state concerns.
+  // you can consider this change as seperation between "smart" component, and "dump" component.
+  // the "smart" component contains the logic for handling the state.
+  // so smart component handle state, and logic, while dump component "CourseList" handle markup
   return (
     <>
       <h2>Courses</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>AuthorId</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {courses.map((course) => {
-            return (
-              <tr key={course.id}>
-                <td>{course.title}</td>
-                <td>{course.authorId}</td>
-                <td>{course.category}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <CourseList courses={courses}/>
     </>
   );
 }
