@@ -6,7 +6,8 @@ import HomePage from "./HomePage";
 import AboutPage from "./AboutPage";
 import Header from "./common/Header";
 import CoursesPage from "./CoursesPage";
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import NotFoundPage from "./NotFoundPage";
 
 // we do the routing by watching the URL.
 // we want the header to be always render, and we need the correct page to be rendered below the Header.
@@ -22,9 +23,12 @@ function App() {
     <div className="container-fluid">
       
     <Header />
-    <Route path="/" exact component = {HomePage}/>
-    <Route path="/courses" component = {CoursesPage}/>
-    <Route path="/about" component = {AboutPage}/>
+    <Switch>
+      <Route path="/" exact component = {HomePage}/>
+      <Route path="/courses" component = {CoursesPage}/>
+      <Route path="/about" component = {AboutPage}/>
+      <Route component = {NotFoundPage}/>
+    </Switch>
     </div>
   );
 }
