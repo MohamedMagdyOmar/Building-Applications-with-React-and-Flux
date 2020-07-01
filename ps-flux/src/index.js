@@ -8,11 +8,13 @@ import React from "react";
 // import ReactDom from 'react-dom';
 // const render = ReactDom.render;
 import { render } from "react-dom";
-
 import App from "./components/App";
+import {BrowserRouter as Router} from "react-router-dom"
 
 // render function accepts 2 arguments
 // the first argument is the component that we want to render -> homepage component
 // the second argument we need to tell react which dom element it should render into.
 
-render(<App />, document.getElementById("root"));
+// by wrapping our top level component "App" in the Router Component, we can declare routes in all of our app's
+// components now
+render(<Router><App /></Router>, document.getElementById("root"));
