@@ -1,5 +1,9 @@
 // this ES import syntax, this line means import npm package called React, and set it to a variable called react
 import React from "react";
+import {Link} from "react-router-dom";
+
+// using the Link Router is handling the routing, so react simply showing a different component
+// as we click around, that is why it is instantly responsive.
 
 // here we are creating a component using a function
 // Component name should start with capital letter
@@ -13,7 +17,7 @@ function HomePage() {
     <div className="jumbotron">
       <h1>Pluralsight Administartion</h1>
       <p>React, Flux, and React Router for ultra-responsive web apps.</p>
-      <a href="/about">About</a>
+      <Link to="about" className="btn btn-primary">About</Link>
     </div>
   );
 }
