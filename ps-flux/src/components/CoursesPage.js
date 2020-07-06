@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // this will call our mock api to get a list of courses
 import { getCourses } from "../api/courseApi";
 import CourseList from "./CourseList";
+import {Link} from "react-router-dom";
 
 function CoursesPage() {
   // we start with empty courses
@@ -40,6 +41,7 @@ function CoursesPage() {
   return (
     <>
       <h2>Courses</h2>
+      <Link className="btn btn-primary" to="/course">Add Course</Link>
       <CourseList courses={courses}/>
     </>
   );
