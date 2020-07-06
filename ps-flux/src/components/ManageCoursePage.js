@@ -11,9 +11,10 @@ const [course, setCourse] = useState({
     category:""
 })
 
-function handleTitleChange(event){
+function handleChange(event){
     // this copies couese object, and set title property
-    const updatedCourse = {...course, title: event.target.value}
+    // compute property, set a property on this object based on the value of this variable
+    const updatedCourse = {...course, [event.target.name]: event.target.value}
     setCourse(updatedCourse)
 
     // below line is similar to the above line, but the above is better
@@ -22,7 +23,7 @@ function handleTitleChange(event){
     return(
         <>
             <h2>Manage Course</h2>
-            <CourseForm course={course} onTitleChange={handleTitleChange}></CourseForm>
+            <CourseForm course={course} onChange={handleChange}></CourseForm>
             <Prompt when={true} message="Are you sure you want to leave?"/>
             {props.match.params.slug}
         </>
