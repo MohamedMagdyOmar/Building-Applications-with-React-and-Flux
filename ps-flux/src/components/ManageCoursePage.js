@@ -26,7 +26,9 @@ function handleChange(event){
 function handleSubmit(event){
     // this will prevent page from posting back to the server
     event.preventDefault();
-    courseApi.saveCourse(course)
+    courseApi.saveCourse(course).then(() => {
+        props.history.push("/courses");
+    });
 }
     return(
         <>
