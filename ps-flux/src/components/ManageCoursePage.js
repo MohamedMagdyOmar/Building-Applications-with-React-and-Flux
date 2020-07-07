@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Prompt } from "react-router-dom"
 import CourseForm from "./CourseForm"
 import * as courseApi from "../api/courseApi";
@@ -14,6 +14,17 @@ const [course, setCourse] = useState({
     authorId: null,
     category:""
 })
+
+// when this component load is function will be executed
+// we have also declare dependency array, becuase if we did not declare it, whenever there is change in the state we will rerun this effect 
+// again the page, which is not required, but by specifying dependency array, whenevr there is change in this state, it will rerun this effect
+useEffect(() =>{
+    const slug = props.match.params.slug; // from the path '/courses/:slug';
+    if(slug){
+        courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+    }
+    // below means if slug in the URL changes, we should rerun the effect
+}, [props.match.params.slug]);
 
 function handleChange(event){
     // this copies couese object, and set title property
