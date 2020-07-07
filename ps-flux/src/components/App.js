@@ -9,6 +9,8 @@ import CoursesPage from "./CoursesPage";
 import { Route, Switch, Redirect } from 'react-router-dom';
 import NotFoundPage from "./NotFoundPage";
 import ManageCoursePage from "./ManageCoursePage";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // we do the routing by watching the URL.
 // we want the header to be always render, and we need the correct page to be rendered below the Header.
@@ -22,13 +24,14 @@ import ManageCoursePage from "./ManageCoursePage";
 function App() {
   return (
     <div className="container-fluid">
-      
+    <ToastContainer autoClose={3000} hideProgressBar/>
     <Header />
     <Switch>
       <Route path="/" exact component = {HomePage}/>
       <Route path="/courses" component = {CoursesPage}/>
       <Route path="/about" component = {AboutPage}/>
       <Route path="/course/:slug" component={ManageCoursePage}/>
+      <Route path="/course" component={ManageCoursePage}/>
       <Redirect from="/about-page" to="/about"/>
       <Route component = {NotFoundPage}/>      
     </Switch>
