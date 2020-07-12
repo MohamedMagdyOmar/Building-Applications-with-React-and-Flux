@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Prompt } from "react-router-dom"
 import CourseForm from "./CourseForm"
-import * as courseApi from "../api/courseApi";
-import {toast} from "react-toastify"
+//import * as courseApi from "../api/courseApi";
+import courseStore from '../stores/courseStore'
+import {toast} from "react-toastify";
+import * as courseActions from "../actions/courseActions";
 
 const ManageCoursePage = props =>{
     const [errors, setErrors] = useState({});
@@ -16,18 +18,21 @@ const [course, setCourse] = useState({
 })
 
 // when this component load is function will be executed
-// we have also declare dependency array, becuase if we did not declare it, whenever there is change in the state we will rerun this effect 
-// again the page, which is not required, but by specifying dependency array, whenevr there is change in this state, it will rerun this effect
+// we have also declare dependency array, because if we did not declare it, whenever there is change in the state we will rerun this effect 
+// again the page, which is not required, but by specifying dependency array, whenever there is change in this state, it will rerun this effect
 useEffect(() =>{
     const slug = props.match.params.slug; // from the path '/courses/:slug';
     if(slug){
-        courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+        //courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+        // now instead of getting course using courseAPI, we will use store in the flux, since it has all the data,
+        // so using courseStore.getCourseBySlug, will return this slug from the flux courseStore
+        setCourse(courseStore.getCourseBySlug(slug))
     }
     // below means if slug in the URL changes, we should rerun the effect
 }, [props.match.params.slug]);
 
 function handleChange(event){
-    // this copies couese object, and set title property
+    // this copies course object, and set title property
     // compute property, set a property on this object based on the value of this variable
     const updatedCourse = {...course, [event.target.name]: event.target.value}
     setCourse(updatedCourse)
@@ -56,10 +61,17 @@ function handleSubmit(event){
     // this will prevent page from posting back to the server
     event.preventDefault();
     if(!formIsValid()) return;
-    courseApi.saveCourse(course).then(() => {
+    /*courseApi.saveCourse(course).then(() => {
         props.history.push("/courses");
         toast.success("Saved");
-    });
+    });*/
+
+    courseActions.saveCourse(course).then(() => {
+        props.history.push("/courses");
+        toast.success("Course saved.")
+    })
+
+    // here instead of using courseApi, we will use createCourse Flux action
 }
     return(
         <>

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 
 // this will call our mock api to get a list of courses
-import { getCourses } from "../api/courseApi";
+//import { getCourses } from "../api/courseApi";
 import CourseList from "./CourseList";
 import {Link} from "react-router-dom";
+
+import courseStore from '../stores/courseStore';
 
 function CoursesPage() {
   // we start with empty courses
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    getCourses().then((_courses) => setCourses(_courses));
+    //getCourses().then((_courses) => setCourses(_courses));
+    // now we get our courses from flux
+    setCourses(courseStore.getCourses())
   }, []);
 
   /*
