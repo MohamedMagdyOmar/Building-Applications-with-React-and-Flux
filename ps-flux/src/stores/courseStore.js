@@ -6,8 +6,11 @@
 
 import {EventEmitter} from 'events';
 import Dispatcher from "../appDispatcher";
+import actionTypes from '../actions/actionTypes';
 
 const CHANGE_EVENT = "change";
+let _courses = [];
+
 // by extending EventEmitter our class can access all EventEmitter capabilities.
 class CourseStore extends EventEmitter{
     // here we will use event emitter to emit events.
@@ -35,13 +38,39 @@ class CourseStore extends EventEmitter{
     emitChange(){
         this.emitChange(CHANGE_EVENT);
     }
+
+    // below 2 functions are like a view that return changed data, and store acts like a database that hold data.
+    getCourses(){
+        return _courses;
+    }
+
+    getCourseBySlug(slug){
+        return _courses.find(course => course.slug === slug);
+    }
 }
 
 Dispatcher.register(action => {
     // this function will be called anytime an action is dispatched.
     // every store is notifed of every action.
     switch(action.actionType){
-        
+        case actionTypes.CREATE_COURSE:
+            // now we will add new course to the flux store.
+            // action.course comes from :
+            // courseAction.js -> dispatcher.dispatch
+            _courses.push(action.course)
+
+            // any time the store changes, we need to call emit change. by emitting
+            // change, any react components that have registered with the store will be notified, so 
+            // they know that they should update the UI.
+            // any store that has addListener, will be notified anytime that i call emit change.
+            store.emitChange();
+
+            // every store's dispatcher recieves every action, so if the store is not interested in that action
+            // , there is nothing to do
+            break;
+
+        default:
+            // do nothing
     }
 })
 
