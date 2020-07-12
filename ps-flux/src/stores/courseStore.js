@@ -5,6 +5,8 @@
 // so we extend base class to give it this behavior.
 
 import {EventEmitter} from 'events';
+import Dispatcher from "../appDispatcher";
+
 const CHANGE_EVENT = "change";
 // by extending EventEmitter our class can access all EventEmitter capabilities.
 class CourseStore extends EventEmitter{
@@ -35,7 +37,16 @@ class CourseStore extends EventEmitter{
     }
 }
 
+Dispatcher.register(action => {
+    // this function will be called anytime an action is dispatched.
+    // every store is notifed of every action.
+    switch(action.actionType){
+        
+    }
+})
+
 const store = new CourseStore();
 export default store;
 
 // next we need to register our store with the dispatcher, so the store will emit when actions occure.
+// so we have missing piece: we need to register the store with the dipatcher, so the store notified when action occur.
