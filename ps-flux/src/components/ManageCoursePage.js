@@ -17,7 +17,7 @@ const [course, setCourse] = useState({
     category:""
 })
 
-// when this component load is function will be executed
+// when this component load, useEffect function will be executed
 // we have also declare dependency array, because if we did not declare it, whenever there is change in the state we will rerun this effect 
 // again the page, which is not required, but by specifying dependency array, whenever there is change in this state, it will rerun this effect
 useEffect(() =>{
@@ -28,7 +28,7 @@ useEffect(() =>{
         // so using courseStore.getCourseBySlug, will return this slug from the flux courseStore
         setCourse(courseStore.getCourseBySlug(slug))
     }
-    // below means if slug in the URL changes, we should rerun the effect
+    // below means if slug in the URL changes, we should rerun useEffect
 }, [props.match.params.slug]);
 
 function handleChange(event){

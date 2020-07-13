@@ -15,7 +15,7 @@ export function saveCourse(course){
     return courseApi.saveCourse(course).then(savedCourse => {
         // now we will call dispatch function. the dispatch function expects us to pass an action.
         // an "action" is an "object" with an "actionType" property. 
-        
+
         // below lines mean: Hey dispatcher, go tell all the stores that a course  was just created.
         // we have not created any stores, but when this code runs, all stores that care about this action will be notified
         // and they can update themselves using this payload.
@@ -32,4 +32,13 @@ export function saveCourse(course){
 
 
 // this is our first action creator, so think of action creator as a handy helper that wraps our actions.
-// 
+
+
+export function loadCourses(){
+    return courseApi.getCourses().then(courses => {
+        dispatcher.dispatch({
+            actionType: actionType.LOAD_COURSES, 
+            courses: courses
+        });
+    })
+}

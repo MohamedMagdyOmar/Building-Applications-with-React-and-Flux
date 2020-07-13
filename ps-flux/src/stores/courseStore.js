@@ -1,4 +1,3 @@
-
 // stores: Change Listeners
 // we can have 1 store per app, or multiiple stores.
 // our store needs to emit an event each time a change occures
@@ -22,7 +21,7 @@ class CourseStore extends EventEmitter{
         // 2-removeChangeListener -> to allow react component to unsubscribe to our store
         // 3-emitChange
 
-    addChangeListner(callback){
+    addChangeListener(callback){
         // when a change occures in our store, we will call the callback provided.
         // this method will allow react components to subscribe to our store so they are notified when change occures.
         // this function is useful to react component so it can say: Hey, i would like to know when this store changes, then 
@@ -36,7 +35,7 @@ class CourseStore extends EventEmitter{
     }
 
     emitChange(){
-        this.emitChange(CHANGE_EVENT);
+        this.emit(CHANGE_EVENT);
     }
 
     // below 2 functions are like a view that return changed data, and store acts like a database that hold data.
@@ -68,7 +67,12 @@ Dispatcher.register(action => {
             // every store's dispatcher recieves every action, so if the store is not interested in that action
             // , there is nothing to do
             break;
-
+        case actionTypes.LOAD_COURSES:
+            _courses = action.courses;
+            store.emitChange();
+            // we have 2 options to load courses:
+            //  1- when needed, 2- when app loads -> used if same data is used by multiple pages
+            break;
         default:
             // do nothing
     }

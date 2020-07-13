@@ -4,19 +4,39 @@ import React, { useEffect, useState } from "react";
 //import { getCourses } from "../api/courseApi";
 import CourseList from "./CourseList";
 import {Link} from "react-router-dom";
-
 import courseStore from '../stores/courseStore';
+import {loadCourses} from '../actions/courseActions'
 
 function CoursesPage() {
   // we start with empty courses
-  const [courses, setCourses] = useState([]);
+  // now we need our state to use data in flux store, so every time the page get loaded, courses will be initialized
+  const [courses, setCourses] = useState(courseStore.getCourses());
 
   useEffect(() => {
+    // goals:
+      // 1- subscribe to Flux store
+      // 2- if courses have not been loaded, call loadCourses action
+
+    // accepts a function that is get called when store change
+    courseStore.addChangeListener(onChange); // subscribe to flux store
+
+    // since our component is connected to the flux store, when courses are added to the store, onChange below will be called
+    if(courseStore.getCourses().length === 0) loadCourses();
+
+    // cleanup on unmount, this function will be called when component unmount(when we navigate to other page)
+    //return () => courseStore.removeChangeListener(onchange); 
+
     //getCourses().then((_courses) => setCourses(_courses));
     // now we get our courses from flux
-    setCourses(courseStore.getCourses())
+    //setCourses(courseStore.getCourses())
   }, []);
 
+    function onChange(){
+      // when the course store changes, we want to get the blist of courses and update the state.
+      // now our component is connected to flux store. but courses in flux store is initialized with an empty array,
+      // so we need to request the list of courses if this page is being loaded for the first time.
+      setCourses(courseStore.getCourses())
+    }
   /*
   // we need to show list of courses when this page/component loads.
   // to do that we need to call our first life cycle method
